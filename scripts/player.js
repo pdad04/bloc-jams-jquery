@@ -36,6 +36,9 @@ class Player {
       this.playState = 'paused';
       this.currentlyPlaying.element.removeClass('playing').addClass('paused');
     }
+
+    // Set the total time in the player bar each time a new song is played.
+    document.getElementsByClassName('total-time')[0].textContent = this.currentlyPlaying.duration;
   }
 
   skipTo (percent) {

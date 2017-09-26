@@ -30,6 +30,10 @@ $( document ).ready(function() {
     player.skipTo(event.target.value);
   });
 
+  $('#volume-control input').on('input', function(event) {
+    player.setVolume(event.target.value);
+  })
+
   setInterval( () => {
     const currentTime = player.getTime();
     const duration = player.getDuration();
