@@ -14,6 +14,19 @@ class Player {
     return this.soundObject.getTime();
   }
 
+  prettyTime(timeInSeconds) {
+    // Convert number to whole seconds
+    var wholeTime = Math.floor(timeInSeconds);
+
+    // Get number of minutes
+    var minutes = (wholeTime / 60 );
+
+    // Convert decimal portion back into seconds and round to nearest whole
+    var seconds = Math.round((minutes % 1) * 60);
+
+    return Math.floor(minutes).toString() + ":" + seconds.toString();
+  }
+
   playPause (song = this.currentlyPlaying) {
     if (this.currentlyPlaying !== song) {
       // Stop the currently playing sound file (even if nothing is playing)
@@ -38,7 +51,7 @@ class Player {
     }
 
     // Set the total time in the player bar each time a new song is played.
-    document.getElementsByClassName('total-time')[0].textContent = this.currentlyPlaying.duration;
+    document.getElementsByClassName('total-time')[0].textContent = this.prettyTime(this.currentlyPlaying.duration);
   }
 
   skipTo (percent) {
