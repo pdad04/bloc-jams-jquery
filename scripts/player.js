@@ -11,10 +11,13 @@ class Player {
   }
 
   getTime() {
+    if(this.playState == 'stopped') {return;}
     return this.soundObject.getTime();
   }
 
   prettyTime(timeInSeconds) {
+    if(timeInSeconds === undefined) {return;}
+
     // Convert number to whole seconds
     var wholeTime = Math.floor(timeInSeconds);
 
@@ -22,8 +25,14 @@ class Player {
     var minutes = (wholeTime / 60 );
 
     // Convert decimal portion back into seconds and round to nearest whole
-    var seconds = Math.round((minutes % 1) * 60);
+    //var seconds = Math.round((minutes % 1) * 60);
+    var seconds = Math.round(timeInSeconds % 60);
 
+    // For proper formating, if seconds < 10, add a '0' as a place holder
+    // so time reads as 0:00
+    if(seconds < 10) {
+      return Math.floor(minutes).toString() + ":" + "0" + seconds.toString();
+    }
     return Math.floor(minutes).toString() + ":" + seconds.toString();
   }
 
@@ -51,7 +60,7 @@ class Player {
     }
 
     // Set the total time in the player bar each time a new song is played.
-    document.getElementsByClassName('total-time')[0].textContent = this.prettyTime(this.currentlyPlaying.duration);
+    $('#time-control .total-time').text(this.prettyTime(this.currentlyPlaying.duration));
   }
 
   skipTo (percent) {
